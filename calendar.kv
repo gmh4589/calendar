@@ -1,0 +1,36 @@
+<YearScreen>:
+	
+<MonthScreen>
+	BoxLayout:
+		orientation: 'vertical'
+		canvas:
+			Color:
+				rgba:(.21, .56, .18, 1)
+			Rectangle:
+				pos: self.pos
+				size: self.size
+		BoxLayout:
+			id: week
+			size_hint: (1, .1)
+		BoxLayout:
+			id: month
+			size_hint: (1, .1)
+		GridLayout:
+			id: dateScreen
+			padding: [20]
+			spacing: [5]
+			cols: 7
+			rows: 6
+			size_hint: (1, .6)
+		BoxLayout:
+			size_hint: (1, .1)
+			Label:
+			Button:
+				id: backBTN
+			Label:
+			Label:
+			Button:
+				id: forwBTN
+			Label:
+		BoxLayout:
+			size_hint: (1, .1)
