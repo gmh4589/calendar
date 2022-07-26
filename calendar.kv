@@ -1,5 +1,3 @@
-<YearScreen>:
-	
 <MonthScreen>
 	BoxLayout:
 		orientation: 'vertical'
@@ -24,13 +22,15 @@
 			size_hint: (1, .6)
 		BoxLayout:
 			size_hint: (1, .1)
-			Label:
-			Button:
-				id: backBTN
-			Label:
-			Label:
-			Button:
-				id: forwBTN
-			Label:
+			AnchorLayout:
+				Button:
+					id: backBTN
+					size: 125, 75
+					size_hint: None, None
+			AnchorLayout:
+				Button:
+					id: forwBTN
+					size: 125, 75
+					size_hint: None, None
 		BoxLayout:
 			size_hint: (1, .1)

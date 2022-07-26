@@ -2,7 +2,6 @@
 import time
 import datetime
 from calendar import monthrange
-import calendar
 
 import kivy
 from kivy.app import App
@@ -10,6 +9,7 @@ from kivy.lang import Builder
 
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.button import Button
+from kivy.uix.label import Label
 from kivy.core.window import Window
 
 Builder.load_file('calendar.kv')
@@ -20,15 +20,14 @@ class MonthScreen(Screen):
 
 	weekDays = ['ПОНЕДЕЛЬНИК', 'ВТОРНИК', 'СРЕДА', 'ЧЕТВЕРГ', 'ПЯТНИЦА', 'СУББОТА', 'ВОСКРЕСЕНЬЕ']
 	month = ['', "ЯНВАРЬ", "ФЕВРАЛЬ", "МАРТ", "АПРЕЛЬ", "МАЙ", "ИЮНЬ", "ИЮЛЬ", "АВГУСТ", "СЕНТЯБРЬ", "ОКТЯБРЬ", "НОЯБРЬ", "ДЕКАБРЬ"]
-	
 	month2 = int(datetime.datetime.now().strftime("%m"))
 	year = int(datetime.datetime.now().strftime("%Y"))
 
 	def __init__(self, **kwargs):
+
 		super().__init__(**kwargs)
 		for i in range(7):
-			self.ids['week'].add_widget(Button(text = self.weekDays[i], background_normal = '', 
-													background_down = '', background_color = (.21, .56, .18, 1)))
+			self.ids['week'].add_widget(Label(text = self.weekDays[i]))
 		self.createMonth(self.month2, self.year)
 
 	def createMonth(self, mon, year):
@@ -46,6 +45,7 @@ class MonthScreen(Screen):
 		self.setDays(monthrange(year, mon)[1], mon, year)
 
 	def setDays(self, days, mon, year):
+
 		for i in range(days):
 			if datetime.date(year, mon, i + 1).isoweekday() == 6 or datetime.date(year, mon, i + 1).isoweekday() == 7:
 				color = (.85, .1, .1, 1)
@@ -59,8 +59,9 @@ class MonthScreen(Screen):
 	def setMonth(self, mon, year):
 
 		self.ids['month'].clear_widgets()
-		self.ids['month'].add_widget(Button(text = str(self.month[mon]) + ' ' + str(year), background_normal = '', font_size = 30,
-													background_down = '', background_color = (.21, .56, .18, 1)))
+		self.ids['month'].add_widget(Button(text = str(self.month[mon]) + ' ' + str(year), background_normal = '', 
+													font_size = 30, background_down = '', 
+													background_color = (.21, .56, .18, 1)))
 
 	def enptyWidget(self, num):
 
@@ -69,27 +70,29 @@ class MonthScreen(Screen):
 												background_down = '', background_color = (.21, .56, .18, 1)))
 
 	def chngMonth(self, mon, year, f):
+
 		global flag
 		flag += f
+		plus = flag // 13
+
+		if flag == 0:
+			flag = 12
+			year -= 1
+		else: year += plus
+
 		self.ids['dateScreen'].clear_widgets()
-		plus = flag // 12
-		print ('Plus = ' + str(plus))
-		year += plus
 		self.createMonth(mon, year)
-		if plus != 0: flag = 0
-		print ('Flag = ' + str(flag))
+
+		if plus != 0: flag = 1
 
 class CalendarApp(App):
 
 	def __init__(self, **kwargs):
 		super().__init__(**kwargs)
 
-#Создаёт и запускает интерфейс
 	def build(self):
 		sm = ScreenManager()
 		sm.add_widget(MonthScreen(name='NowYear'))
-
 		return sm
-		
 
 CalendarApp().run()
