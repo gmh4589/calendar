@@ -1,7 +1,6 @@
 #-*- coding:utf-8 -*-
 import time
 import datetime
-from calendar import monthrange
 
 import kivy
 from kivy.app import App
@@ -26,9 +25,19 @@ class MonthScreen(Screen):
 	def __init__(self, **kwargs):
 
 		super().__init__(**kwargs)
-		for i in range(7):
-			self.ids['week'].add_widget(Label(text = self.weekDays[i]))
+		for i in range(7): self.ids['week'].add_widget(Label(text = self.weekDays[i]))
 		self.createMonth(self.month2, self.year)
+
+	def monthDay(self, year, mon):
+		
+		match mon:
+			case 1 | 3 | 5 | 7 | 8 | 10 | 12: return 31
+			case 4 | 6 | 9 | 11: return 30
+			case 2:
+				if (year%1000) == 0: return 29
+				elif (year%100) == 0: return 28
+				elif (year%4) == 0: return 29
+				else: return 28			
 
 	def createMonth(self, mon, year):
 
@@ -42,32 +51,24 @@ class MonthScreen(Screen):
 		self.ids['forwBTN'].on_press = lambda: self.chngMonth(nxt, year, 1)
 
 		self.enptyWidget(datetime.date(year, mon, 1).isoweekday() - 1)
-		self.setDays(monthrange(year, mon)[1], mon, year)
+		self.setDays(self.monthDay(year, mon), mon, year)
 
 	def setDays(self, days, mon, year):
 
 		for i in range(days):
-			if datetime.date(year, mon, i + 1).isoweekday() == 6 or datetime.date(year, mon, i + 1).isoweekday() == 7:
-				color = (.85, .1, .1, 1)
-			elif datetime.datetime.now().strftime('%Y-%m-%d') == str(datetime.date(year, mon, i + 1)):
-				color = (.1, .8, .2, 1)
-			else:
-				color = (.45, .45, .6, 1)
-			self.ids['dateScreen'].add_widget(Button(text = str(i + 1), font_size = 30, background_normal = '', 
-												background_down = '', background_color = color))
+			if datetime.date(year, mon, i + 1).isoweekday() == 6 or datetime.date(year, mon, i + 1).isoweekday() == 7: color = (.85, .1, .1, 1)
+			elif datetime.datetime.now().strftime('%Y-%m-%d') == str(datetime.date(year, mon, i + 1)): color = (.1, .8, .2, 1)
+			else:color = (.45, .45, .6, 1)
+			self.ids['dateScreen'].add_widget(Button(text = str(i + 1), font_size = 30, background_normal = '', background_down = '', background_color = color))
 
 	def setMonth(self, mon, year):
 
 		self.ids['month'].clear_widgets()
-		self.ids['month'].add_widget(Button(text = str(self.month[mon]) + ' ' + str(year), background_normal = '', 
-													font_size = 30, background_down = '', 
-													background_color = (.21, .56, .18, 1)))
+		self.ids['month'].add_widget(Button(text = str(self.month[mon]) + ' ' + str(year), background_normal = '', font_size = 30, background_down = '', background_color = (.21, .56, .18, 1)))
 
 	def enptyWidget(self, num):
 
-		for i in range(num):
-			self.ids['dateScreen'].add_widget(Button(text = '', background_normal = '', 
-												background_down = '', background_color = (.21, .56, .18, 1)))
+		for i in range(num): self.ids['dateScreen'].add_widget(Button(text = '', background_normal = '', background_down = '', background_color = (.21, .56, .18, 1)))
 
 	def chngMonth(self, mon, year, f):
 
