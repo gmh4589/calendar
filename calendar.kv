@@ -7,12 +7,15 @@
 			Rectangle:
 				pos: self.pos
 				size: self.size
-		BoxLayout:
-			id: week
-			size_hint: (1, .1)
+
 		BoxLayout:
 			id: month
 			size_hint: (1, .1)
+
+		BoxLayout:
+			id: week
+			size_hint: (1, .1)
+
 		GridLayout:
 			id: dateScreen
 			padding: [20]
@@ -20,18 +23,22 @@
 			cols: 7
 			rows: 6
 			size_hint: (1, .6)
+
 		BoxLayout:
 			size_hint: (1, .1)
+
 			AnchorLayout:
 				Button:
 					id: backBTN
-					size: 125, 50
+					size: 250, 125
 					size_hint: None, None
+
 			AnchorLayout:
 				Button:
 					id: forwBTN
-					size: 125, 50
+					size: 250, 125
 					size_hint: None, None
+
 		BoxLayout:
 			size_hint: (1, .1)
 	
