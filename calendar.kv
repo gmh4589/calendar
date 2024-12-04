@@ -1,12 +1,14 @@
+
 <MonthScreen>
 	BoxLayout:
+
 		orientation: 'vertical'
 		canvas:
-			Color:
-				rgba:(.21, .56, .18, 1)
+
 			Rectangle:
 				pos: self.pos
 				size: self.size
+                source: root.background_source
 
 		BoxLayout:
 			id: month
@@ -18,27 +20,47 @@
 
 		GridLayout:
 			id: dateScreen
-			padding: [20]
-			spacing: [5]
+			padding: 20
+			spacing: 5
 			cols: 7
 			rows: 6
 			size_hint: (1, .6)
 
+		GridLayout:
+			size_hint: (1, .1)
+			padding: [20, 0, 20, 0]
+			spacing: 5
+			cols: 2
+			rows: 3
+
+            Button:
+                id: backBTN
+                background_normal: ''
+                background_down: ''
+                color: (.2, .2, .2, 1)
+
+            Button:
+                id: forwBTN
+                background_normal: ''
+                background_down: ''
+                color: (.2, .2, .2, 1)
+
+            Button:
+                id: nowBTN
+                background_color: (.76, .81, .82, .75)
+                background_normal: ''
+                background_down: ''
+                color: (.2, .2, .2, 1)
+
+            Button:
+                text:'ВЫБРАТЬ ДАТУ'
+                id: jumpToBTN
+                on_press: root.jump_to_date()
+                background_color: (.76, .81, .82, .75)
+                background_normal: ''
+                background_down: ''
+                color: (.2, .2, .2, 1)
+
 		BoxLayout:
 			size_hint: (1, .1)
-
-			AnchorLayout:
-				Button:
-					id: backBTN
-					size: 250, 125
-					size_hint: None, None
-
-			AnchorLayout:
-				Button:
-					id: forwBTN
-					size: 250, 125
-					size_hint: None, None
-
-		BoxLayout:
-			size_hint: (1, .1)
-	
+			orientation: 'vertical'
