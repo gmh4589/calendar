@@ -2,12 +2,16 @@
 name = "calendar-main"
 version = "0.1.0"
 description = ""
-authors = ["gmh4589 <40pjanyh.obezjan@gmail.com>"]
+authors = ["gmh4589"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.12"
-kivy = "^2.3.0"
+kivy = "^2.3.1"
+pillow = "^11.1.0"
+numpy = "^2.2.4"
+sqlalchemy = "^2.0.40"
+kivymd = "^1.2.0"
 
 
 [build-system]
